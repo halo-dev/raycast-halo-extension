@@ -1,6 +1,6 @@
 {
   "name": "raycast-halo-extension",
-  "title": "raycast-halo-extension",
+  "title": "Halo",
   "description": "",
   "icon": "command-icon.png",
   "author": "ryanwang",
@@ -8,13 +8,14 @@
   "commands": [
     {
       "name": "index",
-      "title": "Render Markdown",
+      "title": "List Posts",
       "subtitle": "",
-      "description": "Template to render Markdown in a detail view",
+      "description": "",
       "mode": "view"
     }
   ],
   "dependencies": {
+    "@halo-dev/content-api": "^1.0.0-alpha.12",
     "@raycast/api": "^1.25.0"
   },
   "devDependencies": {
