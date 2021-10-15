@@ -1,20 +1,22 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@halo-dev/content-api': ^1.0.0-alpha.12
+  '@halo-dev/admin-api': ^1.0.0-alpha.12
   '@raycast/api': ^1.25.0
   '@types/node': ~16.10.0
   '@types/react': ^17.0.28
   '@typescript-eslint/eslint-plugin': ^5.0.0
   '@typescript-eslint/parser': ^5.0.0
+  dayjs: ^1.10.7
   eslint: ^7.32.0
   eslint-config-prettier: ^8.3.0
   react-devtools: ^4.19.2
   typescript: ^4.4.3
 
 dependencies:
-  '@halo-dev/content-api': 1.0.0-alpha.12
+  '@halo-dev/admin-api': 1.0.0-alpha.12
   '@raycast/api': 1.25.0
+  dayjs: 1.10.7
 
 devDependencies:
   '@types/node': 16.10.9
@@ -83,8 +85,8 @@ packages:
       - supports-color
     dev: true
 
-  /@halo-dev/content-api/1.0.0-alpha.12:
-    resolution: {integrity: sha512-wda+de3x5V041dfAYwsXQCl7SGmpqESnemjF5Qa/XYmd42sl9XdXNoXfSYJ516XdAwGIKuyjp/Zp6O7fYm+pJQ==}
+  /@halo-dev/admin-api/1.0.0-alpha.12:
+    resolution: {integrity: sha512-w9bFkSDucsI0/9tdoYbFZ086okZy5IRF4G90J4ydP4C/QGg8d9Z9tXC4Rpii9seBj2ZzKdaTh/PRX8TKktN1DA==}
     engines: {node: '>=12'}
     dependencies:
       '@halo-dev/rest-api-client': 1.0.0-alpha.12
@@ -622,6 +624,10 @@ packages:
   /csstype/3.0.9:
     resolution: {integrity: sha512-rpw6JPxK6Rfg1zLOYCSwle2GFOOsnjmDYDaBwEcwoOg4qlsIVCN789VkBZDJAGi4T07gI4YSutR43t9Zz4Lzuw==}
     dev: true
+
+  /dayjs/1.10.7:
+    resolution: {integrity: sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==}
+    dev: false
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}

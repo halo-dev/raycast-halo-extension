@@ -1,22 +1,30 @@
 {
   "name": "raycast-halo-extension",
   "title": "Halo",
-  "description": "",
-  "icon": "command-icon.png",
+  "description": "Halo integration for Raycast",
+  "icon": "logo.png",
   "author": "ryanwang",
   "license": "MIT",
   "commands": [
     {
-      "name": "index",
-      "title": "List Posts",
+      "name": "posts",
+      "title": "Search Posts",
       "subtitle": "",
-      "description": "",
+      "description": "Search posts in my halo website.",
+      "mode": "view"
+    },
+    {
+      "name": "attachments",
+      "title": "Search Attachments",
+      "subtitle": "",
+      "description": "Search attachments in my halo website.",
       "mode": "view"
     }
   ],
   "dependencies": {
-    "@halo-dev/content-api": "^1.0.0-alpha.12",
-    "@raycast/api": "^1.25.0"
+    "@halo-dev/admin-api": "^1.0.0-alpha.12",
+    "@raycast/api": "^1.25.0",
+    "dayjs": "^1.10.7"
   },
   "devDependencies": {
     "@types/node": "~16.10.0",
