@@ -19,6 +19,27 @@
       "subtitle": "",
       "description": "Search attachments in my halo website.",
       "mode": "view"
+    },
+    {
+      "name": "journals",
+      "title": "Search Journals",
+      "subtitle": "",
+      "description": "Search Journals in my halo website.",
+      "mode": "view"
+    },
+    {
+      "name": "journal_create",
+      "title": "Create Journal",
+      "subtitle": "",
+      "description": "Create journal in my halo website.",
+      "mode": "view"
+    },
+    {
+      "name": "github_releases",
+      "title": "Check Halo Releases",
+      "subtitle": "",
+      "description": "Check halo releases from github.",
+      "mode": "view"
     }
   ],
   "dependencies": {
