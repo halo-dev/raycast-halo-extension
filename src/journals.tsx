@@ -16,26 +16,24 @@ export default function main() {
             isLoading={loading}
             navigationTitle={'Search journals'}
         >
-            <List.Section title={"Your journals"}>
-                {journals?.map(journal => (
-                    <List.Item
-                        id={journal.id?.toString()}
-                        key={journal.id}
-                        title={journal.sourceContent}
-                        subtitle={journal.type.toLowerCase()}
-                        accessoryTitle={dayjs(journal.createTime).format('YYYY-MM-DD')}
-                        icon={{ source: `https://ryanc.cc/avatar`, mask: ImageMask.Circle }}
-                        actions={
-                            <ActionPanel>
-                                <PushAction
-                                    title="Show Details"
-                                    target={<RenderJournalDetail journal={journal} />}
-                                />
-                            </ActionPanel>
-                        }
-                    />
-                ))}
-            </List.Section>
+            {journals?.map(journal => (
+                <List.Item
+                    id={journal.id?.toString()}
+                    key={journal.id}
+                    title={journal.sourceContent}
+                    subtitle={journal.type.toLowerCase()}
+                    accessoryTitle={dayjs(journal.createTime).format('YYYY-MM-DD')}
+                    icon={{ source: `https://ryanc.cc/avatar`, mask: ImageMask.Circle }}
+                    actions={
+                        <ActionPanel>
+                            <PushAction
+                                title="Show Details"
+                                target={<RenderJournalDetail journal={journal} />}
+                            />
+                        </ActionPanel>
+                    }
+                />
+            ))}
         </List>
     )
 }

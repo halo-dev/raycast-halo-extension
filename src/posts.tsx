@@ -29,28 +29,26 @@ export default function main() {
       isLoading={loading}
       navigationTitle={'Search Posts'}
     >
-      <List.Section title={"Your Posts"}>
-        {posts?.map(post => (
-          <List.Item
-            id={post.id.toString()}
-            key={post.id}
-            title={post.title}
-            subtitle={post.slug}
-            accessoryTitle={dayjs(post.createTime).format('YYYY-MM-DD')}
-            icon={renderPostThumbnail(post.thumbnail)}
-            actions={
-              <ActionPanel>
-                <PushAction
-                  title="Show Details"
-                  target={<RenderPostDetail post={post} />}
-                />
-                <OpenInBrowserAction url={post.fullPath} />
-                <CopyToClipboardAction title="Copy Post URL" content={post.fullPath} />
-              </ActionPanel>
-            }
-          />
-        ))}
-      </List.Section>
+      {posts?.map(post => (
+        <List.Item
+          id={post.id.toString()}
+          key={post.id}
+          title={post.title}
+          subtitle={post.slug}
+          accessoryTitle={dayjs(post.createTime).format('YYYY-MM-DD')}
+          icon={renderPostThumbnail(post.thumbnail)}
+          actions={
+            <ActionPanel>
+              <PushAction
+                title="Show Details"
+                target={<RenderPostDetail post={post} />}
+              />
+              <OpenInBrowserAction url={post.fullPath} />
+              <CopyToClipboardAction title="Copy Post URL" content={post.fullPath} />
+            </ActionPanel>
+          }
+        />
+      ))}
     </List>
   );
 }

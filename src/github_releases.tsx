@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { HaloRestAPIClient } from "@halo-dev/admin-api";
+import type { Environment } from "@halo-dev/admin-api";
 import { ActionPanel, Detail, Icon, ImageMask, List, OpenInBrowserAction, PushAction, showToast, ToastStyle } from "@raycast/api";
 import dayjs from "dayjs";
+import haloAdminClient from "./utils/api-client";
 
 export interface Author {
     login: string;
@@ -97,12 +99,13 @@ export interface Release {
 
 export default function main() {
     const { releases, loading } = useSearch()
+    const { environments, loading: environmentsLoading } = useEnvironments()
 
     return (
         <List
             searchBarPlaceholder="Search releases by keyword..."
             throttle={true}
-            isLoading={loading}
+            isLoading={loading || environmentsLoading}
             navigationTitle={'Check Halo releases'}
         >
             {releases?.map(release => (
@@ -112,7 +115,7 @@ export default function main() {
                     title={release.name}
                     subtitle={`${getAssetsDownloadCount(release).toString()} downloads`}
                     accessoryTitle={dayjs(release.created_at).format('YYYY-MM-DD')}
-                    icon={Icon.Dot}
+                    icon={environments?.version === release.name ? Icon.Circle : Icon.Dot}
                     accessoryIcon={{ source: release.author.avatar_url, mask: ImageMask.Circle }}
                     actions={
                         <ActionPanel>
@@ -177,4 +180,25 @@ export function useSearch() {
     }, [])
 
     return { releases, loading }
+}
+
+export function useEnvironments() {
+    const [environments, setEnvironments] = useState<Environment>();
+    const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        async function fetchEnvironments() {
+            setLoading(true);
+            try {
+                const response = await haloAdminClient.getEnvironment();
+                setEnvironments(response.data)
+            } catch (error: any) {
+                showToast(ToastStyle.Failure, "Could not fetch halo environments", error.message);
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchEnvironments()
+    }, [])
+    return { environments, loading }
 }

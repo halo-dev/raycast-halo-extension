@@ -16,26 +16,24 @@ export default function main() {
             isLoading={loading}
             navigationTitle={'Search attachments'}
         >
-            <List.Section title={"Your attachments"}>
-                {attachments?.map(attachment => (
-                    <List.Item
-                        id={attachment.id.toString()}
-                        key={attachment.id}
-                        title={attachment.name}
-                        subtitle={attachment.mediaType}
-                        accessoryTitle={dayjs(attachment.createTime).format('YYYY-MM-DD')}
-                        icon={attachment.thumbPath}
-                        actions={
-                            <ActionPanel>
-                                <OpenInBrowserAction url={attachment.path} />
-                                <CopyToClipboardAction title="Copy Attachment URL" content={attachment.path} />
-                                <CopyToClipboardAction title="Copy Markdown format URL" content={getMarkdownFormatUrl(attachment)} />
-                                <CopyToClipboardAction title="Copy HTML format URL" content={getHtmlFormatUrl(attachment)} />
-                            </ActionPanel>
-                        }
-                    />
-                ))}
-            </List.Section>
+            {attachments?.map(attachment => (
+                <List.Item
+                    id={attachment.id.toString()}
+                    key={attachment.id}
+                    title={attachment.name}
+                    subtitle={attachment.mediaType}
+                    accessoryTitle={dayjs(attachment.createTime).format('YYYY-MM-DD')}
+                    icon={attachment.thumbPath}
+                    actions={
+                        <ActionPanel>
+                            <OpenInBrowserAction url={attachment.path} />
+                            <CopyToClipboardAction title="Copy Attachment URL" content={attachment.path} />
+                            <CopyToClipboardAction title="Copy Markdown format URL" content={getMarkdownFormatUrl(attachment)} />
+                            <CopyToClipboardAction title="Copy HTML format URL" content={getHtmlFormatUrl(attachment)} />
+                        </ActionPanel>
+                    }
+                />
+            ))}
         </List>
     )
 }
