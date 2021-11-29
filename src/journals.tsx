@@ -5,69 +5,70 @@ import { ActionPanel, Detail, ImageMask, List, PushAction, showToast, ToastStyle
 import dayjs from "dayjs";
 
 export default function main() {
-    const [keyword, setKeyword] = useState<string>();
-    const { journals, loading } = useSearch(keyword)
+  const [keyword, setKeyword] = useState<string>();
+  const { journals, loading } = useSearch(keyword);
 
-    return (
-        <List
-            searchBarPlaceholder="Search journals by keyword..."
-            onSearchTextChange={setKeyword}
-            throttle={true}
-            isLoading={loading}
-            navigationTitle={'Search journals'}
-        >
-            {journals?.map(journal => (
-                <List.Item
-                    id={journal.id?.toString()}
-                    key={journal.id}
-                    title={journal.sourceContent}
-                    subtitle={journal.type.toLowerCase()}
-                    accessoryTitle={dayjs(journal.createTime).format('YYYY-MM-DD')}
-                    icon={{ source: `https://ryanc.cc/avatar`, mask: ImageMask.Circle }}
-                    actions={
-                        <ActionPanel>
-                            <PushAction
-                                title="Show Details"
-                                target={<RenderJournalDetail journal={journal} />}
-                            />
-                        </ActionPanel>
-                    }
-                />
-            ))}
-        </List>
-    )
+  return (
+    <List
+      searchBarPlaceholder="Search journals by keyword..."
+      onSearchTextChange={setKeyword}
+      throttle={true}
+      isLoading={loading}
+      navigationTitle={"Search journals"}
+    >
+      {journals?.map(journal => (
+        <List.Item
+          id={journal.id?.toString()}
+          key={journal.id}
+          title={journal.sourceContent}
+          subtitle={journal.type.toLowerCase()}
+          accessoryTitle={dayjs(journal.createTime).format("YYYY-MM-DD")}
+          icon={{ source: `https://ryanc.cc/avatar`, mask: ImageMask.Circle }}
+          actions={
+            <ActionPanel>
+              <PushAction
+                title="Show Details"
+                target={<RenderJournalDetail journal={journal} />}
+              />
+            </ActionPanel>
+          }
+        />
+      ))}
+    </List>
+  );
 }
 
 export function RenderJournalDetail(props: { journal: Journal }) {
-    const { journal } = props
-    return (
-        <Detail
-            markdown={journal?.sourceContent}
-            navigationTitle={dayjs(journal.createTime).format('YYYY-MM-DD')}
-        />
-    )
+  const { journal } = props;
+  return (
+    <Detail
+      markdown={journal?.sourceContent}
+      navigationTitle={dayjs(journal.createTime).format("YYYY-MM-DD")}
+    />
+  );
 }
 
 export function useSearch(keyword: string | undefined) {
-    const [journals, setJournals] = useState<Journal[]>();
-    const [loading, setLoading] = useState<boolean>(false);
+  const [journals, setJournals] = useState<Journal[]>();
+  const [loading, setLoading] = useState<boolean>(false);
 
-    useEffect(() => {
-        async function fetchJournals() {
-            setLoading(true);
-            try {
-                const response = await haloAdminClient.journal.list({
-                    keyword
-                })
-                setJournals(response.data.content)
-            } catch (error: any) {
-                showToast(ToastStyle.Failure, "Could not fetch journals", error.message);
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchJournals()
-    }, [keyword])
+  useEffect(() => {
+    async function fetchJournals() {
+      setLoading(true);
+      try {
+        const response = await haloAdminClient.journal.list({
+          keyword
+        });
+        setJournals(response.data.content);
+      } catch (error: any) {
+        showToast(ToastStyle.Failure, "Could not fetch journals", error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-    return { journals, loading }
+    fetchJournals();
+  }, [keyword]);
+
+  return { journals, loading };
 }

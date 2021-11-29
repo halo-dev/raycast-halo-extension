@@ -42,20 +42,47 @@
       "mode": "view"
     }
   ],
+  "preferences": [
+    {
+      "name": "siteurl",
+      "type": "textfield",
+      "title": "Site Url",
+      "required": true,
+      "default": "",
+      "description": "Halo Site Url"
+    },
+    {
+      "name": "username",
+      "type": "textfield",
+      "title": "Username",
+      "required": true,
+      "default": "",
+      "description": "Halo Username"
+    },
+    {
+      "name": "password",
+      "type": "password",
+      "title": "Password",
+      "required": true,
+      "default": "",
+      "description": "Halo Password"
+    }
+  ],
   "dependencies": {
-    "@halo-dev/admin-api": "^1.0.0-alpha.12",
-    "@raycast/api": "^1.25.0",
+    "@halo-dev/admin-api": "^1.0.0-alpha.44",
+    "@raycast/api": "^1.25.7",
+    "axios": "^0.24.0",
     "dayjs": "^1.10.7"
   },
   "devDependencies": {
     "@types/node": "~16.10.9",
-    "@types/react": "^17.0.30",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@types/react": "^17.0.37",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "react-devtools": "^4.19.2",
-    "typescript": "^4.4.4"
+    "react-devtools": "^4.21.0",
+    "typescript": "^4.5.2"
   },
   "scripts": {
     "build": "ray build -e dist",

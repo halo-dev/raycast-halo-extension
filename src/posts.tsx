@@ -1,25 +1,25 @@
 import {
-  List,
   ActionPanel,
-  OpenInBrowserAction,
   CopyToClipboardAction,
+  Detail,
   Image,
   ImageMask,
+  List,
+  OpenInBrowserAction,
+  PushAction,
   showToast,
-  ToastStyle,
-  Detail,
-  PushAction
+  ToastStyle
 } from "@raycast/api";
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from "react";
 import haloAdminClient from "./utils/api-client";
-import type { BasePostSimple, PostDetail } from '@halo-dev/admin-api'
+import type { BasePostSimple, PostDetail } from "@halo-dev/admin-api";
 import dayjs from "dayjs";
 
 export default function main() {
 
   const [keyword, setKeyword] = useState<string>();
   const [categoryId, setCategoryId] = useState<number>();
-  const { posts, loading } = useSearch(keyword, categoryId)
+  const { posts, loading } = useSearch(keyword, categoryId);
 
   return (
     <List
@@ -27,7 +27,7 @@ export default function main() {
       onSearchTextChange={setKeyword}
       throttle={true}
       isLoading={loading}
-      navigationTitle={'Search Posts'}
+      navigationTitle={"Search Posts"}
     >
       {posts?.map(post => (
         <List.Item
@@ -35,7 +35,7 @@ export default function main() {
           key={post.id}
           title={post.title}
           subtitle={post.slug}
-          accessoryTitle={dayjs(post.createTime).format('YYYY-MM-DD')}
+          accessoryTitle={dayjs(post.createTime).format("YYYY-MM-DD")}
           icon={renderPostThumbnail(post.thumbnail)}
           actions={
             <ActionPanel>
@@ -54,23 +54,24 @@ export default function main() {
 }
 
 export function RenderPostDetail(props: { post: BasePostSimple }) {
-  const { id } = props.post
+  const { id } = props.post;
   const [post, setPost] = useState<PostDetail>();
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     async function fetchPost() {
-      setLoading(true)
+      setLoading(true);
       try {
         const response = await haloAdminClient.post.get(id);
         setPost(response.data);
       } catch (error: any) {
         showToast(ToastStyle.Failure, "Could not get post details", error.message);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
-    fetchPost()
-  }, [])
+
+    fetchPost();
+  }, []);
 
   return (
     <Detail
@@ -83,14 +84,14 @@ export function RenderPostDetail(props: { post: BasePostSimple }) {
         </ActionPanel>
       }
     />
-  )
+  );
 }
 
 function renderPostThumbnail(thumbnail: string): Image {
   return {
     source: thumbnail,
-    mask: ImageMask.RoundedRectangle,
-  }
+    mask: ImageMask.RoundedRectangle
+  };
 }
 
 export function useSearch(keyword: string | undefined, categoryId: number | undefined): {
@@ -108,8 +109,8 @@ export function useSearch(keyword: string | undefined, categoryId: number | unde
         const response = await haloAdminClient.post.list({
           keyword,
           categoryId
-        })
-        setPosts(response.data.content)
+        });
+        setPosts(response.data.content);
       } finally {
         setLoading(false);
       }
