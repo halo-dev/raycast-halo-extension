@@ -8,7 +8,7 @@ import {
   OpenInBrowserAction,
   PushAction,
   showToast,
-  ToastStyle
+  ToastStyle,
 } from "@raycast/api";
 import { useEffect, useState } from "react";
 import haloAdminClient from "./utils/api-client";
@@ -16,7 +16,6 @@ import type { BasePostSimple, PostDetail } from "@halo-dev/admin-api";
 import dayjs from "dayjs";
 
 export default function main() {
-
   const [keyword, setKeyword] = useState<string>();
   const [categoryId, setCategoryId] = useState<number>();
   const { posts, loading } = useSearch(keyword, categoryId);
@@ -29,7 +28,7 @@ export default function main() {
       isLoading={loading}
       navigationTitle={"Search Posts"}
     >
-      {posts?.map(post => (
+      {posts?.map((post) => (
         <List.Item
           id={post.id.toString()}
           key={post.id}
@@ -39,10 +38,7 @@ export default function main() {
           icon={renderPostThumbnail(post.thumbnail)}
           actions={
             <ActionPanel>
-              <PushAction
-                title="Show Details"
-                target={<RenderPostDetail post={post} />}
-              />
+              <PushAction title="Show Details" target={<RenderPostDetail post={post} />} />
               <OpenInBrowserAction url={post.fullPath} />
               <CopyToClipboardAction title="Copy Post URL" content={post.fullPath} />
             </ActionPanel>
@@ -90,11 +86,14 @@ export function RenderPostDetail(props: { post: BasePostSimple }) {
 function renderPostThumbnail(thumbnail: string): Image {
   return {
     source: thumbnail,
-    mask: ImageMask.RoundedRectangle
+    mask: ImageMask.RoundedRectangle,
   };
 }
 
-export function useSearch(keyword: string | undefined, categoryId: number | undefined): {
+export function useSearch(
+  keyword: string | undefined,
+  categoryId: number | undefined
+): {
   posts?: BasePostSimple[];
   loading: boolean;
 } {
@@ -103,12 +102,11 @@ export function useSearch(keyword: string | undefined, categoryId: number | unde
 
   useEffect(() => {
     async function fetchPosts() {
-
       setLoading(true);
       try {
         const response = await haloAdminClient.post.list({
           keyword,
-          categoryId
+          categoryId,
         });
         setPosts(response.data.content);
       } finally {

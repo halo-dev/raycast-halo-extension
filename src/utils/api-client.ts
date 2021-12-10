@@ -8,7 +8,7 @@ const username = preferenceValues.username as string;
 const password = preferenceValues.password as string;
 
 const haloRestApiClient = new HaloRestAPIClient({
-  baseUrl: siteUrl
+  baseUrl: siteUrl,
 });
 
 const apiClient = new AdminApiClient(haloRestApiClient);
@@ -18,7 +18,7 @@ haloRestApiClient.interceptors.request.use(
     const token = await getLocalStorageItem<string>("token");
     if (token) {
       config.headers = {
-        "Admin-Authorization": token
+        "Admin-Authorization": token,
       };
       return config;
     }
@@ -26,21 +26,19 @@ haloRestApiClient.interceptors.request.use(
     await apiClient.login({ username, password });
     return axios(config);
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
   }
 );
-
 
 let isRefreshingToken = false;
 let pendingRequests: Array<() => AxiosPromise<void>> = [];
 
 haloRestApiClient.interceptors.response.use(
-  response => {
+  (response) => {
     return response;
   },
   async (error: AxiosError) => {
-
     if (axios.isCancel(error)) {
       return Promise.reject(error);
     }
@@ -68,7 +66,7 @@ haloRestApiClient.interceptors.response.use(
           try {
             await handleRefreshToken(refreshToken);
 
-            pendingRequests.forEach(callback => callback());
+            pendingRequests.forEach((callback) => callback());
             pendingRequests = [];
 
             return axios(originalRequest);

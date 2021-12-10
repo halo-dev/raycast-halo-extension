@@ -16,7 +16,7 @@ export default function main() {
       isLoading={loading}
       navigationTitle={"Search attachments"}
     >
-      {attachments?.map(attachment => (
+      {attachments?.map((attachment) => (
         <List.Item
           id={attachment.id.toString()}
           key={attachment.id}
@@ -55,7 +55,7 @@ export function useSearch(keyword: string | undefined) {
       setLoading(true);
       try {
         const response = await haloAdminClient.attachment.list({
-          keyword
+          keyword,
         });
         setAttachments(response.data.content);
       } catch (error: any) {

@@ -10,7 +10,7 @@ import {
   OpenInBrowserAction,
   PushAction,
   showToast,
-  ToastStyle
+  ToastStyle,
 } from "@raycast/api";
 import dayjs from "dayjs";
 import haloAdminClient from "./utils/api-client";
@@ -118,7 +118,7 @@ export default function main() {
       isLoading={loading || environmentsLoading}
       navigationTitle={"Check Halo releases"}
     >
-      {releases?.map(release => (
+      {releases?.map((release) => (
         <List.Item
           id={release.id.toString()}
           key={release.id}
@@ -129,12 +129,9 @@ export default function main() {
           accessoryIcon={{ source: release.author.avatar_url, mask: ImageMask.Circle }}
           actions={
             <ActionPanel>
-              <PushAction
-                title="Show Details"
-                target={<RenderReleaseDetail release={release} />}
-              />
+              <PushAction title="Show Details" target={<RenderReleaseDetail release={release} />} />
               <OpenInBrowserAction url={release.html_url} />
-              {release.assets.map(asset => (
+              {release.assets.map((asset) => (
                 <OpenInBrowserAction key={asset.id} url={asset.browser_download_url} title={`Download ${asset.name}`} />
               ))}
             </ActionPanel>
@@ -163,7 +160,7 @@ export function RenderReleaseDetail(props: { release: Release }) {
 
 export function getAssetsDownloadCount(release: Release): number {
   const { assets } = release;
-  return assets.map(asset => asset.download_count).reduce((prev, current) => prev + current);
+  return assets.map((asset) => asset.download_count).reduce((prev, current) => prev + current);
 }
 
 export function useSearch() {
@@ -175,7 +172,7 @@ export function useSearch() {
       setLoading(true);
       try {
         const haloRestApiClient = new HaloRestAPIClient({
-          baseUrl: "https://api.github.com"
+          baseUrl: "https://api.github.com",
         });
         const client = haloRestApiClient.buildHttpClient();
         const response = await client.get("/repos/halo-dev/halo/releases", {});

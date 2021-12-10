@@ -16,7 +16,7 @@ export default function main() {
       isLoading={loading}
       navigationTitle={"Search journals"}
     >
-      {journals?.map(journal => (
+      {journals?.map((journal) => (
         <List.Item
           id={journal.id?.toString()}
           key={journal.id}
@@ -26,10 +26,7 @@ export default function main() {
           icon={{ source: `https://ryanc.cc/avatar`, mask: ImageMask.Circle }}
           actions={
             <ActionPanel>
-              <PushAction
-                title="Show Details"
-                target={<RenderJournalDetail journal={journal} />}
-              />
+              <PushAction title="Show Details" target={<RenderJournalDetail journal={journal} />} />
             </ActionPanel>
           }
         />
@@ -40,12 +37,7 @@ export default function main() {
 
 export function RenderJournalDetail(props: { journal: Journal }) {
   const { journal } = props;
-  return (
-    <Detail
-      markdown={journal?.sourceContent}
-      navigationTitle={dayjs(journal.createTime).format("YYYY-MM-DD")}
-    />
-  );
+  return <Detail markdown={journal?.sourceContent} navigationTitle={dayjs(journal.createTime).format("YYYY-MM-DD")} />;
 }
 
 export function useSearch(keyword: string | undefined) {
@@ -57,7 +49,7 @@ export function useSearch(keyword: string | undefined) {
       setLoading(true);
       try {
         const response = await haloAdminClient.journal.list({
-          keyword
+          keyword,
         });
         setJournals(response.data.content);
       } catch (error: any) {
