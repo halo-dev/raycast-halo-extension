@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import haloAdminClient from "./utils/api-client";
+import apiClient from "./utils/api-client";
 import type { Journal } from "@halo-dev/admin-api";
 import { Action, ActionPanel, Detail, ImageMask, List, showToast, Toast } from "@raycast/api";
 import dayjs from "dayjs";
@@ -48,7 +48,7 @@ export function useSearch(keyword: string | undefined) {
     async function fetchJournals() {
       setLoading(true);
       try {
-        const response = await haloAdminClient.journal.list({
+        const response = await apiClient.journal.list({
           keyword,
         });
         setJournals(response.data.content);

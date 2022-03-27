@@ -10,35 +10,35 @@
       "name": "posts",
       "title": "Search Posts",
       "subtitle": "",
-      "description": "Search posts in my halo website.",
+      "description": "Search posts in my Halo website.",
       "mode": "view"
     },
     {
       "name": "attachments",
       "title": "Search Attachments",
       "subtitle": "",
-      "description": "Search attachments in my halo website.",
+      "description": "Search attachments in my Halo website.",
       "mode": "view"
     },
     {
       "name": "journals",
       "title": "Search Journals",
       "subtitle": "",
-      "description": "Search Journals in my halo website.",
+      "description": "Search Journals in my Halo website.",
       "mode": "view"
     },
     {
-      "name": "journal_create",
-      "title": "Create Journal",
+      "name": "publish_journal",
+      "title": "Publish Journal",
       "subtitle": "",
-      "description": "Create journal in my halo website.",
+      "description": "Publish a journal to my Halo site",
       "mode": "view"
     },
     {
       "name": "github_releases",
       "title": "Check Halo Releases",
       "subtitle": "",
-      "description": "Check halo releases from github.",
+      "description": "Check Halo releases from GitHub.",
       "mode": "view"
     }
   ],
@@ -57,7 +57,7 @@
       "title": "Username",
       "required": true,
       "default": "",
-      "description": "Halo Username"
+      "description": "Email or Username"
     },
     {
       "name": "password",
@@ -65,7 +65,7 @@
       "title": "Password",
       "required": true,
       "default": "",
-      "description": "Halo Password"
+      "description": "Password"
     }
   ],
   "dependencies": {

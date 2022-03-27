@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import haloAdminClient from "./utils/api-client";
+import apiClient from "./utils/api-client";
 import type { Attachment } from "@halo-dev/admin-api";
 import { Action, ActionPanel, List, showToast, Toast } from "@raycast/api";
 import dayjs from "dayjs";
@@ -54,7 +54,7 @@ export function useSearch(keyword: string | undefined) {
     async function fetchAttachments() {
       setLoading(true);
       try {
-        const response = await haloAdminClient.attachment.list({
+        const response = await apiClient.attachment.list({
           keyword,
         });
         setAttachments(response.data.content);

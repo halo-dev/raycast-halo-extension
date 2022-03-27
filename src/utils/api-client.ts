@@ -101,6 +101,7 @@ async function handleRefreshToken(refreshToken: string | undefined) {
 
 async function handleLogin() {
   try {
+    // @ts-ignore
     const { data } = await apiClient.login({ username, password });
     await LocalStorage.setItem("token", data.access_token);
     await LocalStorage.setItem("refresh_token", data.refresh_token);
