@@ -1,5 +1,5 @@
 import { AdminApiClient, HaloRestAPIClient } from "@halo-dev/admin-api";
-import { getLocalStorageItem, getPreferenceValues, setLocalStorageItem, showToast, ToastStyle } from "@raycast/api";
+import { LocalStorage, getPreferenceValues, showToast, Toast } from "@raycast/api";
 import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from "axios";
 
 const preferenceValues = getPreferenceValues();
@@ -15,16 +15,13 @@ const apiClient = new AdminApiClient(haloRestApiClient);
 
 haloRestApiClient.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
-    const token = await getLocalStorageItem<string>("token");
+    const token = await LocalStorage.getItem<string>("token");
     if (token) {
       config.headers = {
         "Admin-Authorization": token,
       };
-      return config;
     }
-
-    await apiClient.login({ username, password });
-    return axios(config);
+    return config;
   },
   (error) => {
     return Promise.reject(error);
@@ -44,11 +41,11 @@ haloRestApiClient.interceptors.response.use(
     }
 
     if (/Network Error/.test(error.message)) {
-      await showToast(ToastStyle.Failure, "Error", "Network Error");
+      await showToast(Toast.Style.Failure, "Error", "Network Error");
       return Promise.reject(error);
     }
 
-    const refreshToken: string | undefined = await getLocalStorageItem<string>("refresh_token");
+    const refreshToken: string | undefined = await LocalStorage.getItem<string>("refresh_token");
     const originalRequest = error.config;
 
     const response = error.response;
@@ -57,7 +54,7 @@ haloRestApiClient.interceptors.response.use(
 
     if (data) {
       if (data.status === 400) {
-        await showToast(ToastStyle.Failure, "Error", data.message);
+        await showToast(Toast.Style.Failure, "Error", data.message);
         return Promise.reject(error);
       }
       if (data.status === 401) {
@@ -83,11 +80,11 @@ haloRestApiClient.interceptors.response.use(
           return Promise.reject(error);
         }
       }
-      await showToast(ToastStyle.Failure, "Error", data.message || "Internal Server Error");
+      await showToast(Toast.Style.Failure, "Error", data.message || "Internal Server Error");
       return Promise.reject(error);
     }
 
-    await showToast(ToastStyle.Failure, "Error", "Network Error");
+    await showToast(Toast.Style.Failure, "Error", "Network Error");
     return Promise.reject(error);
   }
 );
@@ -95,8 +92,8 @@ haloRestApiClient.interceptors.response.use(
 async function handleRefreshToken(refreshToken: string | undefined) {
   if (refreshToken) {
     const { data } = await apiClient.refreshToken(refreshToken);
-    await setLocalStorageItem("token", data.access_token);
-    await setLocalStorageItem("refresh_token", data.refresh_token);
+    await LocalStorage.setItem("token", data.access_token);
+    await LocalStorage.setItem("refresh_token", data.refresh_token);
   } else {
     throw new Error("refresh token is empty");
   }
@@ -105,8 +102,8 @@ async function handleRefreshToken(refreshToken: string | undefined) {
 async function handleLogin() {
   try {
     const { data } = await apiClient.login({ username, password });
-    await setLocalStorageItem("token", data.access_token);
-    await setLocalStorageItem("refresh_token", data.refresh_token);
+    await LocalStorage.setItem("token", data.access_token);
+    await LocalStorage.setItem("refresh_token", data.refresh_token);
   } catch (e) {
     console.log(e);
     // TODO: reconfigure username and password

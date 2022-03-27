@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import haloAdminClient from "./utils/api-client";
 import type { Attachment } from "@halo-dev/admin-api";
-import { ActionPanel, CopyToClipboardAction, List, OpenInBrowserAction, showToast, ToastStyle } from "@raycast/api";
+import { Action, ActionPanel, List, showToast, Toast } from "@raycast/api";
 import dayjs from "dayjs";
 
 export default function main() {
@@ -26,10 +26,10 @@ export default function main() {
           icon={attachment.thumbPath}
           actions={
             <ActionPanel>
-              <OpenInBrowserAction url={attachment.path} />
-              <CopyToClipboardAction title="Copy Attachment URL" content={attachment.path} />
-              <CopyToClipboardAction title="Copy Markdown format URL" content={getMarkdownFormatUrl(attachment)} />
-              <CopyToClipboardAction title="Copy HTML format URL" content={getHtmlFormatUrl(attachment)} />
+              <Action.OpenInBrowser url={attachment.path} />
+              <Action.CopyToClipboard title="Copy Attachment URL" content={attachment.path} />
+              <Action.CopyToClipboard title="Copy Markdown format URL" content={getMarkdownFormatUrl(attachment)} />
+              <Action.CopyToClipboard title="Copy HTML format URL" content={getHtmlFormatUrl(attachment)} />
             </ActionPanel>
           }
         />
@@ -59,7 +59,7 @@ export function useSearch(keyword: string | undefined) {
         });
         setAttachments(response.data.content);
       } catch (error: any) {
-        showToast(ToastStyle.Failure, "Could not fetch attachments", error.message);
+        await showToast(Toast.Style.Failure, "Could not fetch attachments", error.message);
       } finally {
         setLoading(false);
       }

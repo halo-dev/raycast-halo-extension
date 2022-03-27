@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import haloAdminClient from "./utils/api-client";
 import type { Journal } from "@halo-dev/admin-api";
-import { ActionPanel, Detail, ImageMask, List, PushAction, showToast, ToastStyle } from "@raycast/api";
+import { Action, ActionPanel, Detail, ImageMask, List, showToast, Toast } from "@raycast/api";
 import dayjs from "dayjs";
 
 export default function main() {
@@ -26,7 +26,7 @@ export default function main() {
           icon={{ source: `https://ryanc.cc/avatar`, mask: ImageMask.Circle }}
           actions={
             <ActionPanel>
-              <PushAction title="Show Details" target={<RenderJournalDetail journal={journal} />} />
+              <Action.Push title="Show Details" target={<RenderJournalDetail journal={journal} />} />
             </ActionPanel>
           }
         />
@@ -53,7 +53,7 @@ export function useSearch(keyword: string | undefined) {
         });
         setJournals(response.data.content);
       } catch (error: any) {
-        showToast(ToastStyle.Failure, "Could not fetch journals", error.message);
+        showToast(Toast.Style.Failure, "Could not fetch journals", error.message);
       } finally {
         setLoading(false);
       }

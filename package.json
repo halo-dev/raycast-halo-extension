@@ -69,22 +69,22 @@
     }
   ],
   "dependencies": {
-    "@halo-dev/admin-api": "^1.0.0-alpha.44",
-    "@raycast/api": "^1.25.7",
+    "@halo-dev/admin-api": "^1.0.0",
+    "@raycast/api": "^1.31.0",
     "axios": "^0.24.0",
-    "dayjs": "^1.10.7"
+    "dayjs": "^1.11.0"
   },
   "devDependencies": {
     "@types/node": "~16.10.9",
-    "@types/react": "^17.0.37",
-    "@typescript-eslint/eslint-plugin": "^5.4.0",
-    "@typescript-eslint/parser": "^5.4.0",
+    "@types/react": "^17.0.43",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
     "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.5.1",
-    "react-devtools": "^4.21.0",
-    "typescript": "^4.5.2"
+    "prettier": "^2.6.1",
+    "react-devtools": "^4.24.2",
+    "typescript": "^4.6.3"
   },
   "scripts": {
     "build": "ray build -e dist",

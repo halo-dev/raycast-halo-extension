@@ -1,17 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Environment } from "@halo-dev/admin-api";
 import { HaloRestAPIClient } from "@halo-dev/admin-api";
-import {
-  ActionPanel,
-  Detail,
-  Icon,
-  ImageMask,
-  List,
-  OpenInBrowserAction,
-  PushAction,
-  showToast,
-  ToastStyle,
-} from "@raycast/api";
+import { Action, ActionPanel, Detail, Icon, ImageMask, List, showToast, Toast } from "@raycast/api";
 import dayjs from "dayjs";
 import haloAdminClient from "./utils/api-client";
 
@@ -129,10 +119,14 @@ export default function main() {
           accessoryIcon={{ source: release.author.avatar_url, mask: ImageMask.Circle }}
           actions={
             <ActionPanel>
-              <PushAction title="Show Details" target={<RenderReleaseDetail release={release} />} />
-              <OpenInBrowserAction url={release.html_url} />
+              <Action.Push title="Show Details" target={<RenderReleaseDetail release={release} />} />
+              <Action.OpenInBrowser url={release.html_url} />
               {release.assets.map((asset) => (
-                <OpenInBrowserAction key={asset.id} url={asset.browser_download_url} title={`Download ${asset.name}`} />
+                <Action.OpenInBrowser
+                  key={asset.id}
+                  url={asset.browser_download_url}
+                  title={`Download ${asset.name}`}
+                />
               ))}
             </ActionPanel>
           }
@@ -151,7 +145,7 @@ export function RenderReleaseDetail(props: { release: Release }) {
       navigationTitle={release?.name}
       actions={
         <ActionPanel>
-          <OpenInBrowserAction url={release?.html_url} />
+          <Action.OpenInBrowser url={release?.html_url} />
         </ActionPanel>
       }
     />
@@ -178,7 +172,7 @@ export function useSearch() {
         const response = await client.get("/repos/halo-dev/halo/releases", {});
         setReleases(response);
       } catch (error: any) {
-        showToast(ToastStyle.Failure, "Could not fetch halo github releases", error.message);
+        showToast(Toast.Style.Failure, "Could not fetch halo github releases", error.message);
       } finally {
         setLoading(false);
       }
@@ -201,7 +195,7 @@ export function useEnvironments() {
         const response = await haloAdminClient.getEnvironment();
         setEnvironments(response.data);
       } catch (error: any) {
-        showToast(ToastStyle.Failure, "Could not fetch halo environments", error.message);
+        showToast(Toast.Style.Failure, "Could not fetch halo environments", error.message);
       } finally {
         setLoading(false);
       }

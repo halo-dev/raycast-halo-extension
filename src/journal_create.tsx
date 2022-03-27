@@ -1,4 +1,4 @@
-import { ActionPanel, Form, popToRoot, showToast, SubmitFormAction, ToastStyle } from "@raycast/api";
+import { Action, ActionPanel, Form, popToRoot, showToast, Toast } from "@raycast/api";
 import haloAdminClient from "./utils/api-client";
 import type { Journal } from "@halo-dev/admin-api";
 
@@ -8,7 +8,7 @@ export default function main() {
       onSubmit={handleSubmit}
       actions={
         <ActionPanel>
-          <SubmitFormAction title="Create Journal" onSubmit={handleSubmit} />
+          <Action.SubmitForm title="Create Journal" onSubmit={handleSubmit} />
         </ActionPanel>
       }
     >
@@ -27,9 +27,9 @@ async function handleSubmit(model: Journal) {
       throw Error("Please enter content");
     }
     await haloAdminClient.journal.create(model);
-    await showToast(ToastStyle.Success, "Journal created", "Journal creation successful");
+    await showToast(Toast.Style.Success, "Journal created", "Journal creation successful");
     popToRoot();
   } catch (error: any) {
-    await showToast(ToastStyle.Failure, "Error", error.message);
+    await showToast(Toast.Style.Failure, "Error", error.message);
   }
 }

@@ -1,16 +1,5 @@
-import {
-  ActionPanel,
-  CopyToClipboardAction,
-  Detail,
-  Image,
-  ImageMask,
-  List,
-  OpenInBrowserAction,
-  PushAction,
-  showToast,
-  ToastStyle,
-} from "@raycast/api";
-import { useEffect, useState } from "react";
+import { Action, ActionPanel, Detail, Image, List, showToast, Toast } from "@raycast/api";
+import React, { useEffect, useState } from "react";
 import haloAdminClient from "./utils/api-client";
 import type { BasePostSimple, PostDetail } from "@halo-dev/admin-api";
 import dayjs from "dayjs";
@@ -38,9 +27,9 @@ export default function main() {
           icon={renderPostThumbnail(post.thumbnail)}
           actions={
             <ActionPanel>
-              <PushAction title="Show Details" target={<RenderPostDetail post={post} />} />
-              <OpenInBrowserAction url={post.fullPath} />
-              <CopyToClipboardAction title="Copy Post URL" content={post.fullPath} />
+              <Action.Push title="Show Details" target={<RenderPostDetail post={post} />} />
+              <Action.OpenInBrowser url={post.fullPath} />
+              <Action.CopyToClipboard title="Copy Post URL" content={post.fullPath} />
             </ActionPanel>
           }
         />
@@ -60,7 +49,7 @@ export function RenderPostDetail(props: { post: BasePostSimple }) {
         const response = await haloAdminClient.post.get(id);
         setPost(response.data);
       } catch (error: any) {
-        showToast(ToastStyle.Failure, "Could not get post details", error.message);
+        showToast(Toast.Style.Failure, "Could not get post details", error.message);
       } finally {
         setLoading(false);
       }
@@ -76,7 +65,7 @@ export function RenderPostDetail(props: { post: BasePostSimple }) {
       navigationTitle={post?.title}
       actions={
         <ActionPanel>
-          <OpenInBrowserAction url={post?.fullPath} />
+          <Action.OpenInBrowser url={post?.fullPath} />
         </ActionPanel>
       }
     />
@@ -86,7 +75,7 @@ export function RenderPostDetail(props: { post: BasePostSimple }) {
 function renderPostThumbnail(thumbnail: string): Image {
   return {
     source: thumbnail,
-    mask: ImageMask.RoundedRectangle,
+    mask: Image.Mask.RoundedRectangle,
   };
 }
 
